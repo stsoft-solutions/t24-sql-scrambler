@@ -2,6 +2,7 @@
 
 import (
 	"bytes"
+	"database/sql"
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
@@ -9,6 +10,9 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"time"
+
+	_ "github.com/denisenkom/go-mssqldb"
 )
 
 // IfThenElse evaluates a condition, if true returns the first parameter otherwise the second
@@ -19,7 +23,79 @@ func IfThenElse(condition bool, a interface{}, b interface{}) interface{} {
 	return b
 }
 
+type Database struct {
+	SqlDb *sql.DB
+}
+
+func readTransactions(db *sql.DB) error {
+
+	startedAt := time.Now()
+
+	rows, err := db.Query("SELECT RECNO, XMLRECORD FROM [dbo].[FundsTransfers]")
+	if err != nil {
+		fmt.Println("Query error: ", err.Error())
+	}
+	defer rows.Close()
+
+	cols, err := rows.Columns()
+	if err != nil {
+		return err
+	}
+	if cols == nil {
+		return nil
+	}
+
+	vals := make([]interface{}, len(cols))
+	for i := 0; i < len(cols); i++ {
+		vals[i] = new(interface{})
+		if i != 0 {
+			fmt.Print("\t")
+		}
+		fmt.Print(cols[i])
+	}
+	fmt.Println()
+
+	for rows.Next() {
+		var recordId string
+		var xmlBody string
+		err = rows.Scan(&recordId, &xmlBody)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+
+		//fmt.Println(tranNumber)
+
+	}
+
+	duration := time.Since(startedAt)
+
+	fmt.Printf("Reading is finished %s\n", duration)
+
+	return nil
+}
+
 func main() {
+
+	connectionString := "sqlserver://sa:Qwerty123!@localhost?database=TranDb&connection+timeout=30"
+
+	db, err := sql.Open("mssql", connectionString)
+	if err != nil {
+		fmt.Println("Cannot connect: ", err.Error())
+		return
+	}
+	defer db.Close()
+
+	err = db.Ping()
+	if err != nil {
+		fmt.Println("Cannot connect: ", err.Error())
+		return
+	}
+
+	readTransactions(db)
+
+	//return
+
 	args := os.Args
 	if len(args) < 2 {
 		log.Println("usage exe <streams.json> <connection string>")
