@@ -55,7 +55,7 @@ func main() {
 	}
 
 	// Open FT.xml & print structure
-	filexml, err := os.Open("..\\..\\ft.xml")
+	filexml, err := os.Open("ft.xml")
 	if err != nil {
 		log.Fatal(err)
 	}

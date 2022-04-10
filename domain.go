@@ -1,4 +1,4 @@
-package domain
+package main
 
 type ScrambleStreams struct {
 	Streams map[string]Stream
