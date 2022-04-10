@@ -1,0 +1,62 @@
+{
+    "ft": {
+        "Tables": [
+            "[dbo].[FBNK_FUNDS_TRANSFER]",
+            "[dbo].[FBNK_FUNDS_TRANSFER#HIS]",
+            "[dbo].[FBNK_FUNDS_TRANSFER#NAU]"
+        ],
+        "Tags": [
+            {
+                "Name": "c19",
+                "MultiValue": "0",
+                "Pattern": "ORDC.{1}-{0}"
+            },
+            {
+                "Name": "c20",
+                "MultiValue": "0",
+                "Pattern": "INORDC.{1}-{0}"
+            },
+            {
+                "Name": "c25",
+                "Pattern": "BEN.ACCT.NO-{0}"
+            },
+            {
+                "Name": "c27",
+                "MultiValue": "0",
+                "Pattern": "BENC.{1}-{0}"
+            },
+            {
+                "Name": "c28",
+                "MultiValue": "0",
+                "Pattern": "INBENC.{1}-{0}"
+            },
+            {
+                "Name": "c67",
+                "MultiValue": "52",
+                "Pattern": "SEPANAME.{2}-{0}"
+            },
+            {
+                "Name": "c67",
+                "MultiValue": "56",
+                "Pattern": "SEPA.THEIR.ACCT.{2}-{0}"
+            },
+            {
+                "Name": "c177",
+                "Pattern": "Replace value with M=%[2]s and S=%[3]s and Id=%[1]s"
+            }
+        ]
+    },
+    "account": {
+        "Tables": [
+            "[dbo].[FBNK_ACCOUNT]",
+            "[dbo].[FBNK_ACCOUNT#HIS]",
+            "[dbo].[FBNK_ACCOUNT#NAU]"
+        ],
+        "Tags": [
+            {
+                "Name": "c5",
+                "Pattern": "AccountName-{0}"
+            }
+        ]
+    }
+}
